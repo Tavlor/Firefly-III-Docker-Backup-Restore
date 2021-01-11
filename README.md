@@ -1,6 +1,8 @@
 # Firefly III Docker - backup and restore scripts
 Scripts I've developed to make my life easier. Mounts the volumes used by Firefly and produces tar archives (or unpacks archives, when restoring).
 
+Learn more about Firefly III at https://www.firefly-iii.org/
+
 # Features
 - Checks that docker is running and the volumes exist before making backups (if a volume doesn't exist, an empty volume is created, which will wipe out an existing backup)
 - Can send push notifications - examples for a few OS's are included
