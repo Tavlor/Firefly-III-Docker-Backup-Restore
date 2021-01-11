@@ -7,6 +7,8 @@ Scripts I've developed to make my life easier. Mounts the volumes used by Firefl
 
 # Usage
 ## Before Running
+- prepare your docker environment
+	- make sure docker is running
 - Edit the `VOL_PREFIX` variable:
 	- If you don't use docker-compose, it should be empty
 	```sh
@@ -16,7 +18,12 @@ Scripts I've developed to make my life easier. Mounts the volumes used by Firefl
 	```sh
 	VOL_PREFIX="finance_"
 	```
+### When Backing Up
+- Close out of firefly III, but don't worry about stoping its containers.
 - Configure notifications: Edit `notification ()` and `errornotification ()` for your system. Make sure that lines for other OS's are commented out.
+### When Restoring
+- stop your Firefly containers
+- Remove any existing (corrupt/empty) Firefly volumes before running (**be careful if testing!** You **CANNOT** get volumes back! Consider copying your `docker-compose.yml` to a temporary folder, and using that prefix.)
 ## Running
 The only argument is the backup directory:
 ```sh

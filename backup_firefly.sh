@@ -1,21 +1,6 @@
 #!/bin/bash
 
 # Firefly III Docker backup script, by Taylor Smith
-# creates 2 tar archives from the Firefly volumes; checks that docker is
-# running and the volumes exist before making backups (if a volume doesn't
-# exist, an empty volume is created, which will wipe out an existing backup)
-# To use:
-# - Set "BACKUP_DIR" and "VOL_PREFIX" according to your setup
-# - Adjust notification() to match your system - comment out the parts that
-#   are for other operating systems
-# - Test backup and restoration manually before setting up automation
-
-# a note for docker-compose users:
-# docker-compose usually adds the folder containing your yaml file at the
-# beginning of named volumes it creates (i.e. if you launch firefly using
-# ~/finance/docker-compose.yml, then your volumes will start with "finance_").
-# The VOL_PREFIX variable should be this folder's name, follwed by an
-# underscore.
 
 # directory where your backups will go
 BACKUP_DIR="$(realpath $1)"
