@@ -15,7 +15,7 @@ notification () {
     notify-send -a "Firefly III Backup" "$1" "$2"
 
     # stdout - goes into logs
-    printf "$(date) $1\n\t$2\n"
+    printf "$1\n\t$2\n"
 }
 
 errornotification () {
@@ -31,7 +31,7 @@ errornotification () {
     notify-send -a "Firefly III Backup" "❗️ $1" "$2" -u critical
 
     # stdout - goes into logs
-    printf "$(date) ❗️ $1\n\t$2\n"
+    printf "❗️ $1\n\t$2\n"
 }
 
 # --------------------
@@ -54,7 +54,7 @@ echo ${VOLUMES}
 
 # --- error checking
 # check that docker is running
-if ! docker version; then
+if ! $(docker version > /dev/null); then
     errornotification "Backup failed" "Docker is not running!"
     exit 1
 # check that backup folder exists
