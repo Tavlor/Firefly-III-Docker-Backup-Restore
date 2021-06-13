@@ -1,18 +1,30 @@
 #!/bin/bash
-
 # Firefly III Docker restore script, by Taylor Smith
 
-# directory where your backups will be found
+# get & sanitize location of backups
 BACKUP_DIR="$(realpath $1)"
-# if you don't use docker-compose, set this to an empty string.
-VOL_PREFIX="tws_"
+
+# generate volume names - if there is a prefix, it is the 2nd arg
+VOL_ROOT="firefly_iii"
+if [ "$#" -eq 2 ]; then
+    VOL_ROOT="$2_${VOL_ROOT}"
+fi
+VOLUMES="${VOL_ROOT}_upload ${VOL_ROOT}_db"
 
 # --------------------
 
-VOL_ROOT="${VOL_PREFIX}firefly_iii"
-VOLUMES="${VOL_ROOT}_upload ${VOL_ROOT}_db"
+echo "restoring from archives in $BACKUP_DIR"
 
-echo $BACKUP_DIR
+# check that all volumes do not exist
+for VOL in $VOLUMES
+do
+    echo "-- checking that volume $VOL doesn't exist"
+    if docker volume ls -q | grep -q "^$VOL$"
+    then
+	echo "Volume $VOL already exists! Please rename or delete it."
+        exit 1
+    fi
+done
 
 for VOL in $VOLUMES
 do

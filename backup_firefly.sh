@@ -1,11 +1,5 @@
 #!/bin/bash
-
 # Firefly III Docker backup script, by Taylor Smith
-
-# directory where your backups will go
-BACKUP_DIR="$(realpath $1)"
-# if you don't use docker-compose, set this to an empty string
-VOL_PREFIX="tws_"
 
 # helper functions to notify you
 notification () {
@@ -21,7 +15,7 @@ notification () {
     notify-send -a "Firefly III Backup" "$1" "$2"
 
     # stdout - goes into logs
-    printf "$(date) $1\n\t$2\n"
+    printf "$1\n\t$2\n"
 }
 
 errornotification () {
@@ -37,22 +31,30 @@ errornotification () {
     notify-send -a "Firefly III Backup" "❗️ $1" "$2" -u critical
 
     # stdout - goes into logs
-    printf "$(date) ❗️ $1\n\t$2\n"
+    printf "❗️ $1\n\t$2\n"
 }
 
 # --------------------
 
-VOL_ROOT="${VOL_PREFIX}firefly_iii"
+# get & sanitize location of backups
+BACKUP_DIR="$(realpath $1)"
+
+# generate volume names - if there is a prefix, it is the 2nd arg
+VOL_ROOT="firefly_iii"
+if [ "$#" -eq 2 ]; then
+    VOL_ROOT="${2}_${VOL_ROOT}"
+fi
 VOLUMES="${VOL_ROOT}_upload ${VOL_ROOT}_db"
+
+# --------------------
 
 echo "+++++ starting at $(date) +++++"
 echo "Backing up to $BACKUP_DIR"
-echo "Using prefix: $VOL_PREFIX"
 echo ${VOLUMES}
 
 # --- error checking
 # check that docker is running
-if ! docker version; then
+if ! $(docker version > /dev/null); then
     errornotification "Backup failed" "Docker is not running!"
     exit 1
 # check that backup folder exists
