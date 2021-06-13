@@ -17,8 +17,8 @@ notification () {
     # display notification item 2 of argv with title item 1 of argv subtitle "Firefly III Backup"
     # end run' "$1" "$2"
     
-    # GNOME - popup notification
-    notify-send "Firefly III Backup: $1" "$2"
+    # Linux - popup notification
+    notify-send -a "Firefly III Backup" "$1" "$2"
 
     # stdout - goes into logs
     printf "$(date) $1\n\t$2\n"
@@ -33,8 +33,8 @@ errornotification () {
     # display notification item 2 of argv with title item 1 of argv subtitle "Firefly III Backup"
     # end run' "❗️ $1" "$2"
     
-    # GNOME - popup notification
-    notify-send "Firefly III Backup: ❗️ $1" "$2" -u critical
+    # Linux - popup notification
+    notify-send -a "Firefly III Backup" "❗️ $1" "$2" -u critical
 
     # stdout - goes into logs
     printf "$(date) ❗️ $1\n\t$2\n"
