@@ -15,6 +15,16 @@ VOLUMES="${VOL_ROOT}_upload ${VOL_ROOT}_db"
 
 echo "restoring from archives in $BACKUP_DIR"
 
+# check that all recovery files exist
+for VOL in $VOLUMES
+do
+    echo "-- checking for backup file $VOL.tar"
+    if ! test -f "$BACKUP_DIR/$VOL.tar"; then
+	echo " couldn't find backup file $VOL.tar! Does it have the wrong name?"
+        exit 1	
+    fi
+done
+
 # check that all volumes do not exist
 for VOL in $VOLUMES
 do
@@ -26,6 +36,7 @@ do
     fi
 done
 
+# perform recovery
 for VOL in $VOLUMES
 do
     echo "-- restoring volume $VOL"
