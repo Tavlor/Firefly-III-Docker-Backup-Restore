@@ -1,6 +1,8 @@
 # Firefly III Docker - backup and restore scripts
 Scripts I've developed to make my life easier. Mounts the volumes used by Firefly and produces tar archives (or unpacks archives, when restoring).
 
+**NOTE: I am not using or updating these scripts any more.** You are more than welcome to fork this & adapt it to your needs. I never sorted out a proper way to export the databases - the script just copies files out of the volumes.
+
 Learn more about Firefly III at https://www.firefly-iii.org/
 
 # Features
